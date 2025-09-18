@@ -8,7 +8,7 @@ export class SanityService {
 
   constructor(private configService: ConfigService) {
     this.client = createClient({
-      projectId: '4xrk10ec', // From your sanity.config.ts
+      projectId: '4xrk10ec', 
       dataset: 'production',
       useCdn: true,
       apiVersion: '2023-05-03',

@@ -6,7 +6,7 @@ async function bootstrap() {
   
   // Enable CORS for frontend integration
   app.enableCors({
-    origin: ['http://localhost:3003', 'http://localhost:3333', 'http://localhost:5500', 'http://127.0.0.1:5500'], // Add your frontend URLs
+    origin: ['http://localhost:3000', 'http://localhost:3333', 'https://fac-frontend.vercel.app/'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     allowedHeaders: 'Content-Type, Accept, Authorization, X-Requested-With',
     credentials: true,
