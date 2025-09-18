@@ -5,6 +5,12 @@
 /.pnp
 .pnp.js
 
+# Compiled output (NestJS)
+/dist
+*.js
+*.js.map
+tsconfig.tsbuildinfo
+
 # Compiled Sanity Studio
 /dist
 

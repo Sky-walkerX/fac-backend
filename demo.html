@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Portfolio Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .api-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .endpoint-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .endpoint-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .endpoint-card h3 {
+            color: #4a5568;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .endpoint-url {
+            background: #f1f5f9;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #2d3748;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .test-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.2s ease;
+            width: 100%;
+        }
+
+        .test-button:hover {
+            background: #5a67d8;
+        }
+
+        .response-area {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f7fafc;
+            border-radius: 5px;
+            border: 1px solid #e2e8f0;
+            min-height: 100px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8em;
+            white-space: pre-wrap;
+            color: #2d3748;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .loading {
+            color: #667eea;
+            font-style: italic;
+        }
+
+        .error {
+            color: #e53e3e;
+        }
+
+        .success {
+            color: #38a169;
+        }
+
+        .links-section {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .links-section h3 {
+            margin-bottom: 20px;
+            color: #4a5568;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .link-item {
+            padding: 15px;
+            background: #f1f5f9;
+            border-radius: 8px;
+            transition: background-color 0.2s ease;
+        }
+
+        .link-item:hover {
+            background: #e2e8f0;
+        }
+
+        .link-item a {
+            text-decoration: none;
+            color: #667eea;
+            font-weight: 500;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-running {
+            background: #38a169;
+            box-shadow: 0 0 10px rgba(56, 161, 105, 0.5);
+        }
+
+        .status-stopped {
+            background: #e53e3e;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Faculty Portfolio API Demo</h1>
+            <p>NestJS + Sanity CMS Integration</p>
+            <div style="margin-top: 20px;">
+                <span class="status-indicator status-running"></span>
+                <span>API Running on localhost:3001</span>
+                <span style="margin-left: 20px;">
+                    <span class="status-indicator status-running"></span>
+                    <span>Sanity Studio on localhost:3334</span>
+                </span>
+            </div>
+        </div>
+
+        <div class="api-demo">
+            <div class="endpoint-card">
+                <h3>📋 About Information</h3>
+                <div class="endpoint-url">GET /faculty/about</div>
+                <button class="test-button" onclick="testEndpoint('/faculty/about', 'about-response')">
+                    Test About Endpoint
+                </button>
+                <div id="about-response" class="response-area">Click "Test About Endpoint" to see faculty information...</div>
+            </div>
+
+            <div class="endpoint-card">
+                <h3>🔬 Research & Publications</h3>
+                <div class="endpoint-url">GET /faculty/research</div>
+                <button class="test-button" onclick="testEndpoint('/faculty/research', 'research-response')">
+                    Test Research Endpoint
+                </button>
+                <div id="research-response" class="response-area">Click "Test Research Endpoint" to see research data...</div>
+            </div>
+
+            <div class="endpoint-card">
+                <h3>🚀 Projects</h3>
+                <div class="endpoint-url">GET /faculty/projects</div>
+                <button class="test-button" onclick="testEndpoint('/faculty/projects', 'projects-response')">
+                    Test Projects Endpoint
+                </button>
+                <div id="projects-response" class="response-area">Click "Test Projects Endpoint" to see project information...</div>
+            </div>
+
+            <div class="endpoint-card">
+                <h3>🎓 Teaching</h3>
+                <div class="endpoint-url">GET /faculty/teaching</div>
+                <button class="test-button" onclick="testEndpoint('/faculty/teaching', 'teaching-response')">
+                    Test Teaching Endpoint
+                </button>
+                <div id="teaching-response" class="response-area">Click "Test Teaching Endpoint" to see courses taught...</div>
+            </div>
+
+            <div class="endpoint-card">
+                <h3>📞 Contact Information</h3>
+                <div class="endpoint-url">GET /faculty/contact</div>
+                <button class="test-button" onclick="testEndpoint('/faculty/contact', 'contact-response')">
+                    Test Contact Endpoint
+                </button>
+                <div id="contact-response" class="response-area">Click "Test Contact Endpoint" to see contact details...</div>
+            </div>
+
+            <div class="endpoint-card">
+                <h3>👥 Thesis Supervision</h3>
+                <div class="endpoint-url">GET /faculty/supervision</div>
+                <button class="test-button" onclick="testEndpoint('/faculty/supervision', 'supervision-response')">
+                    Test Supervision Endpoint
+                </button>
+                <div id="supervision-response" class="response-area">Click "Test Supervision Endpoint" to see thesis supervision records...</div>
+            </div>
+        </div>
+
+        <div class="links-section">
+            <h3>🔗 Quick Links</h3>
+            <div class="links-grid">
+                <div class="link-item">
+                    <a href="http://localhost:3334" target="_blank">🎨 Sanity Studio</a>
+                    <br><small>Content Management System</small>
+                </div>
+                <div class="link-item">
+                    <a href="http://localhost:3001/faculty/about" target="_blank">🔍 API Explorer</a>
+                    <br><small>Raw JSON Response</small>
+                </div>
+                <div class="link-item">
+                    <a href="https://github.com/nestjs/nest" target="_blank">📖 NestJS Docs</a>
+                    <br><small>Backend Framework</small>
+                </div>
+                <div class="link-item">
+                    <a href="https://www.sanity.io/docs" target="_blank">📚 Sanity Docs</a>
+                    <br><small>CMS Documentation</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:3001';
+
+        async function testEndpoint(endpoint, responseElementId) {
+            const responseElement = document.getElementById(responseElementId);
+            
+            try {
+                responseElement.textContent = '⏳ Loading...';
+                responseElement.className = 'response-area loading';
+                
+                const response = await fetch(`${API_BASE_URL}${endpoint}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                responseElement.textContent = JSON.stringify(data, null, 2);
+                responseElement.className = 'response-area success';
+                
+                if (Array.isArray(data) && data.length === 0) {
+                    responseElement.textContent = '📝 No data found. Please add content in Sanity Studio first.\n\n' + 
+                        'Go to http://localhost:3334 to add faculty data.';
+                    responseElement.className = 'response-area';
+                }
+                
+            } catch (error) {
+                responseElement.textContent = `❌ Error: ${error.message}\n\n` +
+                    'Make sure the NestJS backend is running on http://localhost:3001';
+                responseElement.className = 'response-area error';
+            }
+        }
+
+        // Auto-test the about endpoint on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                testEndpoint('/faculty/about', 'about-response');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
